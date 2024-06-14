@@ -54,10 +54,8 @@ Log out and back in to see change.
 Docs: https://github.com/zap-zsh/zap
 
 ```shell
-zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
 ```
-
-The install script will create a new `.zshrc`. Go ahead and delete it and restore the old one.
 
 Restart your terminal.
 
