@@ -2,7 +2,7 @@
 
 ...and other computer setup stuff in this readme. This assumes you've installed a Debian-based distribution.
 
-### Add user to sudoers
+### Add user to sudoers (if there is a separate root user)
 
 Run the `su` command and enter the password, then run the following commands:
 
@@ -29,15 +29,7 @@ If there are any errors with `checkout`, delete the conflicting files and try ag
 ### Packages
 
 ```shell
-sudo apt install alacritty tmux xclip curl fontconfig
-```
-
-### fnm
-
-docs: https://github.com/Schniz/fnm
-
-```shell
-curl -fsSL https://fnm.vercel.app/install | bash
+sudo apt install neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh
 ```
 
 ### Zsh
