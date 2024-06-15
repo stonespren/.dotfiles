@@ -3,6 +3,7 @@
 
 # PATH updates
 export PATH="/home/parker/.local/bin:/home/parker/.local/share/fnm:$PATH"
+export PATH=$PATH:$HOME/go/bin
 
 # plugins
 plug "zsh-users/zsh-autosuggestions"
