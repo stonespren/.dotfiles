@@ -1,0 +1,9 @@
+[user]
+  email = 51301343+stonespren@users.noreply.github.com
+  name = stonespren
+[init]
+  defaultBranch = main
+[push]
+  autoSetupRemote = true
+[core]
+  editor = nvim
