@@ -1,6 +1,11 @@
 # Created by Zap installer
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
 
+# Exports
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+
 # PATH updates
 export PATH="/home/parker/.local/bin:/home/parker/.local/share/fnm:$PATH"
 export PATH=$PATH:$HOME/go/bin
@@ -24,5 +29,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# Aliases
-alias dotfiles='/usr/bin/git --git-dir=/home/parker/.dotfiles/ --work-tree=/home/parker'
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
