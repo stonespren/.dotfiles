@@ -7,8 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
 # PATH updates
-export PATH="/home/parker/.local/bin:/home/parker/.local/share/fnm:$PATH"
-export PATH=$PATH:$HOME/go/bin
+export PATH="/home/parker/.local/bin:/home/parker/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
 
 # plugins
 plug "zsh-users/zsh-autosuggestions"
