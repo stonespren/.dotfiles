@@ -18,4 +18,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Use SSH
 yadm remote set-url origin "git@github.com:stonespren/.dotfiles.git"
 
+# Grub Theme
+git clone https://github.com/HeinrichZurHorstMeyer/Framework-Grub-Theme.git
+sudo cp -r Framework-Grub-Theme/Framework /boot/grub/themes/
+sudo bash -c 'echo "GRUB_THEME=\"/boot/grub/themes/Framework/theme.txt\"" >> /etc/default/grub'
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo update-grub
+rm -rf Framework-Grub-Theme
+
 echo "Restart your computer"
