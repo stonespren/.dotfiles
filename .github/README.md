@@ -53,14 +53,14 @@ Debian:
 
 ```shell
 sudo apt install yadm
-yadm clone https://github.com/stonespren/.dotfiles.git --bootstrap
+yadm clone https://github.com/stonespren/.dotfiles.git --debian --bootstrap
 ```
 
 Arch:
 
 ```shell
 yay -S yadm
-yadm clone https://github.com/stonespren/.dotfiles.git --bootstrap
+yadm clone https://github.com/stonespren/.dotfiles.git --arch --bootstrap
 ```
 
 
