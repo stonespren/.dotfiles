@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Install packages
+sudo apt install -y neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh
