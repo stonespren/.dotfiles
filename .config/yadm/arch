@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Install packages
+sudo yay -S bitwarden google-chrome firefox discord alacritty yadm
