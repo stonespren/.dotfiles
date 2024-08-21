@@ -8,6 +8,7 @@ case $ID in
     ;;
 
   arch)
+	  pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 	  yay -S bitwarden google-chrome firefox discord alacritty yadm neovim tmux xclip curl fontconfig base-devel unzip zsh update-grub
     ;;
 
