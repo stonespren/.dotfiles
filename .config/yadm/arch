@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Install packages
-sudo yay -S bitwarden google-chrome firefox discord alacritty yadm neovim tmux xclip curl fontconfig base-devel unzip zsh

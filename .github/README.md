@@ -49,20 +49,10 @@
 
 In the home directory, run:
 
-Debian:
-
 ```shell
 sudo apt install yadm
-yadm clone https://github.com/stonespren/.dotfiles.git --debian --bootstrap
+yadm clone https://github.com/stonespren/.dotfiles.git --bootstrap
 ```
-
-Arch:
-
-```shell
-yay -S yadm
-yadm clone https://github.com/stonespren/.dotfiles.git --arch --bootstrap
-```
-
 
 Run `getnf` and pick fonts
 

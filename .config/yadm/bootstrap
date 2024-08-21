@@ -1,5 +1,20 @@
 #!/bin/bash
 
+. /etc/os-release
+
+case $ID in
+  debian | ubuntu)
+	sudo apt install -y neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh
+    ;;
+
+  arch)
+	  yay -S bitwarden google-chrome firefox discord alacritty yadm neovim tmux xclip curl fontconfig base-devel unzip zsh update-grub
+    ;;
+
+  *) echo "This is an unknown distribution."
+      ;;
+esac
+
 # Zsh
 chsh -s $(which zsh)
 
