@@ -7,7 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
 # PATH updates
-export PATH="/home/parker/.local/bin:/home/parker/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
+export PATH="/home/$USER/.local/bin:/home/$USER/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
 
 # plugins
 plug "zsh-users/zsh-autosuggestions"
@@ -22,7 +22,7 @@ autoload -Uz compinit
 compinit
 
 # pnpm
-export PNPM_HOME="/home/parker/.local/share/pnpm"
+export PNPM_HOME="/home/$USER/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -30,6 +30,12 @@ esac
 
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if [ -x "$(command -v pyenv)" ]; then
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
+# start tmux on startup
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
+    exec tmux attach
+fi
