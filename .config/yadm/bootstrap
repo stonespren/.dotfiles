@@ -9,7 +9,7 @@ case $ID in
 
   arch)
 	  pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-	  yay -S bitwarden google-chrome firefox discord alacritty yadm neovim tmux xclip curl fontconfig base-devel unzip zsh update-grub
+	  yay -S bitwarden google-chrome firefox discord alacritty yadm neovim tmux xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji
     ;;
 
   *) echo "This is an unknown distribution."
@@ -38,5 +38,8 @@ sudo bash -c 'echo "GRUB_THEME=\"/boot/grub/themes/Framework/theme.txt\"" >> /et
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo update-grub
 rm -rf Framework-Grub-Theme
+
+# Pnpm
+curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 echo "Restart your computer"
