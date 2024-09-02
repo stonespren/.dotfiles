@@ -21,6 +21,11 @@ plug "zap-zsh/fnm"
 autoload -Uz compinit
 compinit
 
+# aliases
+alias c="clear"
+alias touchpad="sudo kcmshell6 kcm_touchpad"
+alias plasmarestart="killall plasmashell && kstart5 plasmashell"
+
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
 case ":$PATH:" in
@@ -36,6 +41,6 @@ if [ -x "$(command -v pyenv)" ]; then
 fi
 
 # start tmux on startup
-if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
-    exec tmux attach
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    tmux attach || tmux
 fi
