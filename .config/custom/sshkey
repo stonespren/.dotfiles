@@ -1,0 +1,11 @@
+#!/bin/bash
+
+read -p "Enter your email address: " email
+read -p "Enter a suffix (or leave blank): " suffix
+
+ssh-keygen -t ed25519 -C "$email"
+
+eval `ssh-agent -s`
+
+ssh-add ~/.ssh/id_ed25519$suffix
+cat ~/.ssh/id_ed25519$suffix.pub | xclip -sel clip

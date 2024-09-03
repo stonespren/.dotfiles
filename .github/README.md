@@ -50,7 +50,6 @@
 In the home directory, run:
 
 ```shell
-sudo apt install yadm
 yadm clone https://github.com/stonespren/.dotfiles.git --bootstrap
 ```
 
@@ -58,19 +57,4 @@ Run `getnf` and pick fonts
 
 In tmux, pres `prefix` + I to fetch plugins.
 
-<details><summary>Set up GitHub</summary>
-
-```shell
-ssh-keygen -t ed25519 -C "email_here"
-```
-
-Add .github to the file name
-
-```shell
-ssh-add ~/.ssh/id_ed25519.github
-cat ~/.ssh/id_ed25519.github.pub | xclip -sel clip
-```
-
-Paste into GitHub.
-
-</details>
+run `.config/custom/sshkey` to generate an sshkey and copy it to the clipboard

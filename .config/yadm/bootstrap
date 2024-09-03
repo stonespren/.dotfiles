@@ -4,7 +4,7 @@
 
 case $ID in
   debian | ubuntu)
-	sudo apt install -y neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh
+	sudo apt install -y neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh yadm
     ;;
 
   arch)
