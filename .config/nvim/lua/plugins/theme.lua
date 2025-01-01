@@ -1,8 +1,9 @@
 return {
-    "scottmckendry/cyberdream.nvim",
+    "marko-cerovac/material.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-	    vim.cmd([[colorscheme cyberdream]])
+	    vim.cmd([[colorscheme material]])
+	    vim.g.material_style = "palenight"
     end
 }
