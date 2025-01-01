@@ -9,7 +9,7 @@ return {
             vim.g.lsp_zero_extend_lspconfig = 0
         end
     },
-    {
+    --[[{
         "zbirenbaum/copilot-cmp",
         config = true,
         event = { "InsertEnter", "LspAttach" },
@@ -22,7 +22,7 @@ return {
                 }
             }
         }
-    },
+    },]]--
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
@@ -48,7 +48,7 @@ return {
             cmp.setup({
                 sources = {
                     { name = "luasnip",  priority = 10 },
-                    { name = "copilot",  priority = 9 },
+                    -- { name = "copilot",  priority = 9 },
                     { name = "nvim_lsp", priority = 8 }
                 },
                 preselect = 'item',
