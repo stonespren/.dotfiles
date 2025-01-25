@@ -9,3 +9,5 @@ family = "FiraMono Nerd Font"
 
 [window]
 opacity = 0.95
+blur = true
+dynamic_padding = true
