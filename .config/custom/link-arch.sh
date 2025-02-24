@@ -11,6 +11,10 @@ function ask_yes_no {
   done
 }
 
+if ask_yes_no "Do you want to create a symlink to /storage?"; then
+  ln -s /storage storage
+fi
+
 if ask_yes_no "Do you want to DELETE the Downloads Directory and link it to /storage?"; then
   rm -rf /home/$USER/Downloads
   ln -s /storage/Downloads /home/$USER
