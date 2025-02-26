@@ -42,6 +42,4 @@ rm -rf Framework-Grub-Theme
 # Pnpm
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 
-/home/$USER/.config/custom/link-arch.sh
-
 echo "Restart your computer"
