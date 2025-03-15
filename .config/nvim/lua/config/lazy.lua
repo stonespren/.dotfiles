@@ -19,5 +19,21 @@ require("lazy").setup({
 		lazy = false,
 		version = false,
 	},
-	checker = { enabled = true },
+	checker = { 
+		enabled = true
+	},
+	install = {
+		missing = true,
+	},
+	change_detection = {
+		enabled = true,
+		notify = true,
+	},
 })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    require("lazy").update({ show = false })
+  end,
+})
+
