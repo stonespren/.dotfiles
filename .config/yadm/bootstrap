@@ -9,7 +9,7 @@ case $ID in
 
   arch)
 	  sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-	  yay -S bitwarden google-chrome firefox zen-browser-bin discord alacritty ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint
+	  yay -S bitwarden google-chrome firefox zen-browser-bin discord alacritty ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit
     ;;
 
   *) echo "This is an unknown distribution."
