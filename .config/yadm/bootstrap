@@ -8,7 +8,21 @@ case $ID in
     ;;
 
   arch)
-	  sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+	  sudo pacman -S --needed git base-devel
+      if ! command -v yay >/dev/null 2>&1; then
+        # Clean up any previous attempts
+        rm -rf /tmp/yay
+        cd /tmp
+        git clone https://aur.archlinux.org/yay.git
+        cd yay
+        makepkg -si --noconfirm
+        cd "$HOME"
+        # Clean up after installation
+        rm -rf /tmp/yay
+      else
+        print_success "yay is already installed"
+      fi
+
 	  yay -S bitwarden google-chrome firefox zen-browser-bin discord alacritty ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit getnf
     ;;
 
