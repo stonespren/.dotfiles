@@ -5,7 +5,7 @@ return {
 	keys = { { "<leader>pv", "<CMD>Oil<CR>" } },
 	opts = {
 		view_options = {
-			show_hidden = true
+			show_hidden = true,
 		},
 	},
 }

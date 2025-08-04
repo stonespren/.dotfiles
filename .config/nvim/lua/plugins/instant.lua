@@ -1,4 +1,4 @@
 return {
-  "jbyuki/instant.nvim",
-  lazy = false,
+	"jbyuki/instant.nvim",
+	lazy = false,
 }
