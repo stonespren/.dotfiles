@@ -7,7 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
 # PATH updates
-export PATH="/home/$USER/.local/bin:/home/$USER/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
 
 # plugins
 plug "zsh-users/zsh-autosuggestions"
@@ -45,3 +45,4 @@ fi
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
     tmux attach || tmux
 fi
+
