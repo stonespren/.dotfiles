@@ -23,7 +23,7 @@ case $ID in
       print_success "yay is already installed"
     fi
 
-    yay -S bitwarden google-chrome firefox zen-browser-bin discord alacritty ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit getnf
+    yay -S --needed firefox helium-browser-bin discord ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit getnf
     ;;
 
   *) echo "This is an unknown distribution."
