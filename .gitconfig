@@ -5,10 +5,17 @@
 	defaultBranch = main
 [core]
 	editor = nvim
-	pager = delta --line-numbers --dark
+	pager = delta
 [pull]
 	rebase = true
 [push]
 	autoSetupRemote = true
 [alias]
 	undo = reset --soft HEAD^
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	hyperlinks = true
+	dark = true
