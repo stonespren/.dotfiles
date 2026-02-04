@@ -26,6 +26,7 @@ alias c="clear"
 alias touchpad="sudo kcmshell6 kcm_touchpad"
 alias plasmarestart="systemctl --user restart plasma-plasmashell"
 alias lg="lazygit"
+alias p="pnpm"
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
