@@ -19,11 +19,9 @@ case $ID in
       cd "$HOME"
       # Clean up after installation
       rm -rf /tmp/yay
-    else
-      print_success "yay is already installed"
     fi
 
-    yay -S --needed firefox helium-browser-bin discord ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit getnf
+    yay -S --needed firefox helium-browser-bin discord ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig base-devel unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta flameshot corepdf dragon gwenview fprint lazygit getnf brightnessctl
     ;;
 
   *) echo "This is an unknown distribution."
@@ -31,26 +29,38 @@ case $ID in
 esac
 
 # Zsh
-chsh -s $(which zsh)
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+  chsh -s $(which zsh)
+fi
 
 # Zap
-zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
+if [ ! -d "$HOME/.local/share/zap" ]; then
+  zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
+fi
 
 # Tmux Plugin Manager
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 # Use SSH
-yadm remote set-url origin "git@github.com:stonespren/.dotfiles.git"
+if [ "$(yadm remote get-url origin)" != "git@github.com:stonespren/.dotfiles.git" ]; then
+  yadm remote set-url origin "git@github.com:stonespren/.dotfiles.git"
+fi
 
 # Grub Theme
-git clone https://github.com/HeinrichZurHorstMeyer/Framework-Grub-Theme.git
-sudo cp -r Framework-Grub-Theme/Framework /boot/grub/themes/
-sudo bash -c 'echo "GRUB_THEME=\"/boot/grub/themes/Framework/theme.txt\"" >> /etc/default/grub'
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo update-grub
-rm -rf Framework-Grub-Theme
+if ! grep -q "GRUB_THEME" /etc/default/grub; then
+  git clone https://github.com/HeinrichZurHorstMeyer/Framework-Grub-Theme.git
+  sudo cp -r Framework-Grub-Theme/Framework /boot/grub/themes/
+  sudo bash -c 'echo "GRUB_THEME=\"/boot/grub/themes/Framework/theme.txt\"" >> /etc/default/grub'
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  sudo update-grub
+  rm -rf Framework-Grub-Theme
+fi
 
 # Pnpm
-curl -fsSL https://get.pnpm.io/install.sh | sh -
+if ! command -v pnpm >/dev/null 2>&1; then
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
+fi
 
 echo "Restart your computer"
