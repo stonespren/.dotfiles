@@ -1,0 +1,121 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "memory",
+    "network",
+    "bluetooth",
+    "tray"
+  ],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
+    "custom/updates",
+    "backlight",
+    "custom/brightness-external",
+    "pulseaudio",
+    "clock",
+    "battery",
+    "custom/power"
+  ],
+  "custom/launcher": {
+    "format": " ",
+    "on-click": "hyprlauncher",
+    "on-click-right": "killall hyprlauncher"
+  },
+  "cpu": {
+    "interval": 15,
+    "format": " {}%",
+    "max-length": 10
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {}%",
+    "max-length": 10
+  },
+  "network": {
+    "tooltip": true,
+    "tooltip-format": " {interface}\n {ip_address}",
+    "format-wifi": "  {essid}",
+    "format-ethernet": "🖧 🖒",
+    "format-disconnected": "🖧 🖓",
+    "on-click": "nm-connection-editor",
+    "on-click-right": "killall nm-connection-editor"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "blueman-manager",
+    "on-click-right": "killall blueman-manager"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "hyprland/workspaces": {
+    "all-outputs": false,
+    "format": "{icon} {name}",
+    "format-focused": "{icon} {name}",
+    "format-occupied": "{icon} {name}",
+    "format-empty": "{icon} {name}",
+    "format-icons": {
+      "default": "○",
+      "active": "●"
+    }
+  },
+  "backlight": {
+    "device": "amdgpu_bl1",
+    "format": " {}%",
+    "on-scroll-up": "brightnessctl s 1%+ -d amdgpu_bl1",
+    "on-scroll-down": "brightnessctl s 1%- -d amdgpu_bl1"
+  },
+  "custom/brightness-external": {
+    "exec": "~/.config/waybar/scripts/brightness-external.sh get",
+    "exec-on-event": true,
+    "interval": 0,
+    "format": " {}%",
+    "on-scroll-up": "~/.config/waybar/scripts/brightness-external.sh up",
+    "on-scroll-down": "~/.config/waybar/scripts/brightness-external.sh down"
+  },
+  "pulseaudio": {
+    "tooltip": false,
+    "scroll-step": 5,
+    "format": "{icon} {volume}%",
+    "format-muted": " {volume}%",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    }
+  },
+  "clock": {
+    "format": " {:%I:%M %p}",
+    "format-alt": "{:%Y-%m-%d}",
+    "tooltip-format": "{calendar}"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "custom/power": {
+    "format": "⏻ ",
+    "on-click": "wlogout"
+  }
+}
