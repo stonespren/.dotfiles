@@ -1,6 +1,6 @@
 [user]
-	email = 51301343+stonespren@users.noreply.github.com
-	name = stonespren
+	email = parker@rx.co
+	name = parkerstone
 [init]
 	defaultBranch = main
 [core]
@@ -19,5 +19,3 @@
 	line-numbers = true
 	hyperlinks = true
 	dark = true
-[includeIf "gitdir:~/rxco/"]
-	path = /home/parker/.gitconfig-rxco
