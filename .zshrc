@@ -5,6 +5,7 @@
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
+export SYSTEMD_EDITOR=nvim
 
 # PATH updates
 export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"
@@ -27,6 +28,8 @@ alias touchpad="sudo kcmshell6 kcm_touchpad"
 alias plasmarestart="systemctl --user restart plasma-plasmashell"
 alias lg="lazygit"
 alias p="pnpm"
+alias px="pnpm dlx"
+alias waybar-restart="pkill -USR2 waybar"
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
@@ -47,3 +50,5 @@ if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] && [ "
     tmux attach || tmux
 fi
 
+# VSCode integration
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
