@@ -2,17 +2,15 @@
 
 STEP=5
 VCP=10
-BRIGHTNESS_FILE="/tmp/brightness"
-BUSES_FILE="/tmp/ddc_buses"
+INDEX="${2:-1}"
+BRIGHTNESS_FILE="/tmp/brightness-$INDEX"
 
 [ -f "$BRIGHTNESS_FILE" ] || echo 50 > "$BRIGHTNESS_FILE"
 
-get_buses() {
-  [ -f "$BUSES_FILE" ] && cat "$BUSES_FILE"
-}
-
 case "$1" in
   up|down)
+    DISPLAY=$(sed -n "${INDEX}p" /tmp/ddc_displays 2>/dev/null)
+    [ -z "$DISPLAY" ] && exit 0
     CURRENT=$(<"$BRIGHTNESS_FILE")
 
     if [ "$1" = "up" ]; then
@@ -24,15 +22,15 @@ case "$1" in
     fi
 
     echo "$NEW" > "$BRIGHTNESS_FILE"
-
-    for display in $(cat /tmp/ddc_displays 2>/dev/null); do
-      ddcutil --display="$display" setvcp $VCP "$NEW" \
-        --noverify --sleep-multiplier=0 >/dev/null 2>&1 &
-    done
+    ddcutil --display="$DISPLAY" setvcp $VCP "$NEW" \
+      --noverify --sleep-multiplier=0 >/dev/null 2>&1 &
 
     echo "$NEW"
     ;;
   get)
+    ddcutil detect --brief 2>/dev/null | awk '/^Display/ {print $2}' > /tmp/ddc_displays
+    DISPLAY=$(sed -n "${INDEX}p" /tmp/ddc_displays 2>/dev/null)
+    [ -z "$DISPLAY" ] && exit 0
     echo "$(<"$BRIGHTNESS_FILE")"
     ;;
 esac
