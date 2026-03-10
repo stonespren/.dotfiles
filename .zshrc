@@ -30,6 +30,7 @@ alias lg="lazygit"
 alias p="pnpm"
 alias px="pnpm dlx"
 alias waybar-restart="pkill -USR2 waybar"
+alias yays="yay -S"
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
@@ -52,3 +53,4 @@ fi
 
 # VSCode integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
