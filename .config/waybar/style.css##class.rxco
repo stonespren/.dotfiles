@@ -1,0 +1,38 @@
+@import url("style.css##default");
+
+#custom-netbird-status,
+#custom-netbird-toggle {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+}
+
+#custom-netbird-status {
+  background: #89dceb;
+}
+
+#custom-netbird-status.connected {
+  background: #abe9b3;
+}
+
+#custom-netbird-status.connecting {
+  background: #fae3b0;
+}
+
+#custom-netbird-status.disconnected,
+#custom-netbird-status.error {
+  background: #f28fad;
+}
+
+#custom-netbird-toggle {
+  background: #c9cbff;
+}
+
+#custom-netbird-toggle.connected {
+  background: #f8bd96;
+}

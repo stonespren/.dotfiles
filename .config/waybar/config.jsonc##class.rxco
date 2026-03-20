@@ -1,0 +1,26 @@
+{
+  "include": ["~/.config/waybar/config.jsonc##default"],
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "memory",
+    "network",
+    "custom/netbird-status",
+    "custom/netbird-toggle",
+    "bluetooth",
+    "tray"
+  ],
+  "custom/netbird-status": {
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/netbird-waybar.sh status",
+    "interval": 5,
+    "tooltip": true
+  },
+  "custom/netbird-toggle": {
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/netbird-waybar.sh toggle-label",
+    "on-click": "~/.config/waybar/scripts/netbird-waybar.sh toggle-action",
+    "interval": 5,
+    "tooltip": true
+  }
+}

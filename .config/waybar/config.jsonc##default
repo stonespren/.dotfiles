@@ -1,0 +1,176 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "memory",
+    "network",
+    "bluetooth",
+    "tray"
+  ],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
+    "custom/updates",
+    "group/brightness",
+    "group/audio",
+    "clock",
+    "battery",
+    "custom/notification",
+    "custom/power"
+  ],
+  "custom/launcher": {
+    "format": " ",
+    "on-click": "hyprlauncher",
+    "on-click-right": "killall hyprlauncher"
+  },
+  "cpu": {
+    "interval": 15,
+    "format": " {}%",
+    "max-length": 10
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {}%",
+    "max-length": 10
+  },
+  "network": {
+    "tooltip": true,
+    "tooltip-format": " {interface}\n {ip_address}",
+    "format-wifi": "  {essid}",
+    "format-ethernet": "🖧 🖒",
+    "format-disconnected": "🖧 🖓",
+    "on-click": "nm-connection-editor",
+    "on-click-right": "killall nm-connection-editor"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "pavucontrol",
+    "on-click-right": "killall pavucontrol"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "hyprland/workspaces": {
+    "all-outputs": false,
+    "format": "{icon} {name}",
+    "format-focused": "{icon} {name}",
+    "format-occupied": "{icon} {name}",
+    "format-empty": "{icon} {name}",
+    "format-icons": {
+      "default": "○",
+      "active": "●"
+    }
+  },
+  "backlight": {
+    "device": "amdgpu_bl1",
+    "format": " {}%",
+    "on-scroll-up": "brightnessctl s 1%+ -d amdgpu_bl1",
+    "on-scroll-down": "brightnessctl s 1%- -d amdgpu_bl1"
+  },
+  "group/brightness": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 400,
+      "transition-left-to-right": false
+    },
+    "modules": ["backlight", "backlight/slider"]
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 400,
+      "transition-left-to-right": false
+    },
+    "modules": ["wireplumber", "pulseaudio/slider"]
+  },
+  "group/brightness-external-1": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 400,
+      "transition-left-to-right": false
+    },
+    "modules": ["custom/brightness-external-label-1", "custom/brightness-external"]
+  },
+  "group/brightness-external-2": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 400,
+      "transition-left-to-right": false
+    },
+    "modules": ["custom/brightness-external-label-2", "custom/brightness-external-2"]
+  },
+  "custom/brightness-external-label-1": {
+    "format": "󰍹 M1",
+    "tooltip": false
+  },
+  "custom/brightness-external-label-2": {
+    "format": "󰍹 M2",
+    "tooltip": false
+  },
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "device": "intel_backlight"
+  },
+  "wireplumber": {
+    "tooltip": false,
+    "scroll-step": 5,
+    "min-length": 6,
+    "format": "{icon} {volume}%",
+    "format-muted": " {volume}%",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "max-volume": 100
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+  "clock": {
+    "format": " {:%I:%M %p}",
+    "format-alt": "{:%Y-%m-%d}",
+    "tooltip-format": "{calendar}"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚",
+      "none": "󰂜",
+      "dnd-notification": "󰂛",
+      "dnd-none": "󰂛"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "custom/power": {
+    "format": "⏻ ",
+    "on-click": "wlogout"
+  }
+}
