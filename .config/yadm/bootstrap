@@ -21,14 +21,14 @@ case $ID in
       rm -rf /tmp/yay
     fi
 
-    yay -S --needed helium-browser-bin zen-browser-bin discord ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta corepdf dragon gwenview fprint lazygit getnf
+    yay -S --needed --noconfirm helium-browser-bin zen-browser-bin discord ghostty yadm neovim tmux visual-studio-code-bin xclip curl fontconfig unzip zsh update-grub less noto-fonts noto-fonts-cjk noto-fonts-emoji obsidian git-delta corepdf dragon gwenview fprint lazygit getnf
 
     case "$XDG_CURRENT_DESKTOP" in
       KDE)
-        yay -S --needed flameshot 
+        yay -S --needed --noconfirm flameshot 
         ;;
       Hyprland)
-        yay -S --needed hyprpaper hypridle hyprlock xdg-desktop-portal-hyprland hyprpolkitagent hyprsysteminfo hyprland-qt-support hyprcursor hyprutils hyprlang hyprwayland-scanner aquamarine hyprgraphics hyprland-qtutils mako waybar playerctl network-manager-applet pamixer hyprlauncher hyprsnap blueman brightnessctl thunar gvfs thunar-archive-plugin tumbler cliphist wl-clipboard
+        yay -S --needed --noconfirm hyprpaper hypridle hyprlock xdg-desktop-portal-hyprland hyprpolkitagent hyprsysteminfo hyprland-qt-support hyprcursor hyprutils hyprlang hyprwayland-scanner aquamarine hyprgraphics hyprland-qtutils waybar playerctl network-manager-applet pamixer hyprlauncher hyprsnap blueman brightnessctl gvfs cliphist wl-clipboard wlogout swaync
 
         ;;
     esac

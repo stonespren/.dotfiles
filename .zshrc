@@ -30,7 +30,8 @@ alias lg="lazygit"
 alias p="pnpm"
 alias px="pnpm dlx"
 alias waybar-restart="pkill -USR2 waybar"
-alias yays="yay -S"
+alias yays="yay -S --needed"
+alias lgyadm="GIT_DIR="$HOME/.local/share/yadm/repo.git" GIT_WORK_TREE="$HOME" lazygit"
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
