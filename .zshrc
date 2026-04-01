@@ -52,6 +52,18 @@ if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] && [ "
     tmux attach || tmux
 fi
 
+# scripts
+portkiller() {
+  local pid
+  pid=$(lsof -ti :"$1")
+  if [[ -z "$pid" ]]; then
+    echo "No process found on port $1"
+    return 1
+  fi
+  echo "Killing PID $pid on port $1"
+  kill -9 "$pid"
+}
+
 # VSCode integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
