@@ -8,7 +8,7 @@
     "bluetooth",
     "tray"
   ],
-  "modules-center": ["hyprland/workspaces"],
+  "modules-center": ["ext/workspaces"],
   "modules-right": [
     "custom/updates",
     "group/brightness",
@@ -56,8 +56,10 @@
     "icon-size": 18,
     "spacing": 10
   },
-  "hyprland/workspaces": {
+  "ext/workspaces": {
     "all-outputs": false,
+    "on-click": "activate",
+    "sort-by-id": true,
     "format": "{icon} {name}",
     "format-focused": "{icon} {name}",
     "format-occupied": "{icon} {name}",
