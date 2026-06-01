@@ -1,0 +1,7 @@
+source = ~/.config/hypr/hyprlock.base.conf
+
+auth {
+    pam {
+        enabled = true
+    }
+}
