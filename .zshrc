@@ -67,3 +67,5 @@ portkiller() {
 # VSCode integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
+# opencode
+export PATH=/home/parker/.opencode/bin:$PATH
