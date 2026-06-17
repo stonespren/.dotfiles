@@ -1,0 +1,115 @@
+#!/bin/bash
+
+apt_refresh_needed=0
+release_codename="${VERSION_CODENAME:-$(lsb_release -sc 2>/dev/null)}"
+
+ensure_keyring() {
+  key_url="$1"
+  key_path="$2"
+  if [ ! -f "$key_path" ]; then
+    curl -fsSL "$key_url" | sudo gpg --dearmor -o "$key_path"
+  fi
+}
+
+ensure_apt_source() {
+  source_file="$1"
+  source_line="$2"
+  if [ ! -f "$source_file" ] || ! grep -Fxq "$source_line" "$source_file"; then
+    echo "$source_line" | sudo tee "$source_file" >/dev/null
+    apt_refresh_needed=1
+  fi
+}
+
+ensure_flatpak_app() {
+  app_id="$1"
+  if ! flatpak --user remote-info flathub "$app_id" >/dev/null 2>&1; then
+    echo "Flatpak app '$app_id' was not found in Flathub."
+    return 1
+  fi
+  if ! flatpak list --app --columns=application 2>/dev/null | grep -Fxq "$app_id"; then
+    flatpak install -y --user flathub "$app_id"
+  fi
+}
+
+ensure_satty_flatpak_bundle() {
+  if flatpak list --app --columns=application 2>/dev/null | grep -Eq '^org\.satty\.(Satty|satty)$'; then
+    return 0
+  fi
+
+  satty_bundle_url="$(
+    curl -fsSL "https://api.github.com/repos/Satty-org/Satty/releases/latest" \
+      | jq -r '.assets[] | select(.name | endswith(".flatpak")) | .browser_download_url' \
+      | head -n 1
+  )"
+
+  if [ -z "$satty_bundle_url" ] || [ "$satty_bundle_url" = "null" ]; then
+    echo "Unable to find a Satty .flatpak bundle in the latest GitHub release."
+    return 1
+  fi
+
+  satty_bundle_file="$(mktemp /tmp/satty-XXXXXX.flatpak)"
+  curl -fsSL "$satty_bundle_url" -o "$satty_bundle_file"
+  flatpak install -y --user "$satty_bundle_file"
+  rm -f "$satty_bundle_file"
+}
+
+ensure_flathub_remote() {
+  if ! flatpak --user remotes --columns=name | grep -Fxq "flathub"; then
+    flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  else
+    flatpak --user remote-modify --enable flathub
+  fi
+
+  flatpak --user update -y --appstream flathub
+}
+
+ensure_flatpak_xdg_path() {
+  profile_file="$HOME/.profile"
+  flatpak_line='export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"'
+  if [ ! -f "$profile_file" ] || ! grep -Fxq "$flatpak_line" "$profile_file"; then
+    echo "$flatpak_line" >> "$profile_file"
+  fi
+}
+
+sudo apt update
+sudo apt install -y neovim git alacritty tmux xclip curl fontconfig build-essential unzip zsh yadm sddm gnome-keyring seahorse libpam-gnome-keyring dolphin wget gpg cliphist sway-notification-center git-delta
+sudo systemctl enable sddm.service
+
+# third-party repositories
+ensure_keyring "https://debian.griffo.io/EA0F721D231FDD3A0A17B9AC7808B4DD62C41256.asc" "/etc/apt/trusted.gpg.d/debian.griffo.io.gpg"
+ensure_apt_source "/etc/apt/sources.list.d/debian.griffo.io.list" "deb https://debian.griffo.io/apt ${release_codename} main"
+
+ensure_keyring "https://raw.githubusercontent.com/imputnet/helium-linux/main/pubkey.asc" "/usr/share/keyrings/helium.gpg"
+ensure_apt_source "/etc/apt/sources.list.d/helium.list" "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/helium.gpg] https://pkg.helium.computer/deb stable main"
+
+ensure_keyring "https://packages.microsoft.com/keys/microsoft.asc" "/usr/share/keyrings/microsoft.gpg"
+ensure_apt_source "/etc/apt/sources.list.d/vscode.list" "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main"
+
+ensure_apt_source "/etc/apt/sources.list.d/trixie-backports.list" "deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware"
+
+if [ "$apt_refresh_needed" -eq 1 ]; then
+  sudo apt update
+fi
+
+sudo apt install -y ghostty lazygit helium-bin code
+sudo apt install -yt trixie-backports hyprpaper hyprlauncher hypridle hyprlock xdg-desktop-portal-hyprland hyprpolkitagent hyprshutdown hyprwayland-scanner hyprland-guiutils
+sudo apt install -y rofi jq imagemagick coreutils hyprpicker grim slurp wl-clipboard
+
+if ! command -v hyprsnap >/dev/null 2>&1; then
+  curl -fsSL https://raw.githubusercontent.com/chpock/hyprsnap/refs/heads/main/hyprsnap -o /tmp/hyprsnap
+  chmod +x /tmp/hyprsnap
+  sudo install -m 755 /tmp/hyprsnap /usr/local/bin/hyprsnap
+  rm -f /tmp/hyprsnap
+fi
+
+# Flatpak
+sudo apt install -y flatpak
+ensure_flatpak_xdg_path
+ensure_flathub_remote
+ensure_flatpak_app "com.github.PintaProject.Pinta"
+ensure_satty_flatpak_bundle
+
+# getnf
+if ! command -v getnf >/dev/null 2>&1; then
+  curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | bash
+fi
