@@ -74,4 +74,11 @@ install_udev_rule() {
 }
 install_udev_rule
 
+# Dark mode
+if [ -x "$HOME/.config/yadm/dark-mode.sh" ] && { [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; }; then
+  if ! "$HOME/.config/yadm/dark-mode.sh"; then
+    echo "Skipping dark mode setup for this session."
+  fi
+fi
+
 echo "Restart your computer"
