@@ -36,8 +36,8 @@ alias lgyadm="GIT_DIR="$HOME/.local/share/yadm/repo.git" GIT_WORK_TREE="$HOME" l
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 
 # Pyenv
