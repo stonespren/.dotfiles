@@ -32,6 +32,7 @@ alias px="pnpm dlx"
 alias waybar-restart="pkill -USR2 waybar"
 alias yays="yay -S --needed"
 alias lgyadm="GIT_DIR="$HOME/.local/share/yadm/repo.git" GIT_WORK_TREE="$HOME" lazygit"
+alias gs="git switch"
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
@@ -49,7 +50,7 @@ fi
 
 # start tmux on startup
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
-    tmux attach || tmux
+    tmux new-session -A
 fi
 
 # scripts
@@ -69,3 +70,6 @@ portkiller() {
 
 # opencode
 export PATH=/home/parker/.opencode/bin:$PATH
+
+# nub
+export PATH="$HOME/.nub/bin:$PATH"
