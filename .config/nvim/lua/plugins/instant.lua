@@ -1,4 +1,1 @@
-return {
-	"jbyuki/instant.nvim",
-	lazy = false,
-}
+vim.pack.add({ "https://github.com/jbyuki/instant.nvim" })

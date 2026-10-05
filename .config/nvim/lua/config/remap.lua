@@ -1,8 +1,12 @@
 -- Reload everything
 vim.keymap.set("n", "<leader><leader>r", function()
+	for name in pairs(package.loaded) do
+		if name:match("^config") or name:match("^plugins") then
+			package.loaded[name] = nil
+		end
+	end
 	vim.cmd("source $HOME/.config/nvim/init.lua")
-	vim.cmd("Lazy reload")
-end, { desc = "Reload config and lazy plugins" })
+end, { desc = "Reload config" })
 
 -- Yanks into the system clipboard register
 local function safe_yank_motion()

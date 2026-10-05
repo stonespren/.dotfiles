@@ -1,5 +1,6 @@
-return {
-	"folke/todo-comments.nvim",
-	dependencies = { "nvim-lua/plenary.nvim" },
-	config = true,
-}
+vim.pack.add({
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/folke/todo-comments.nvim",
+})
+
+require("todo-comments").setup()

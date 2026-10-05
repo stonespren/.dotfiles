@@ -1,7 +1,3 @@
-return {
-	"tpope/vim-fugitive",
-	cmd = { "G", "Git" },
-	keys = {
-		{ "<leader>gs", "<cmd>Git<cr>" },
-	},
-}
+vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
+
+vim.keymap.set("n", "<leader>gs", "<cmd>Git<cr>")
