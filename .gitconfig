@@ -19,5 +19,13 @@
 	line-numbers = true
 	hyperlinks = true
 	dark = true
+	plus-style = syntax "#1a4a80"
+	plus-emph-style = syntax "#2f78d0"
+	plus-non-emph-style = syntax "#1a4a80"
+	minus-style = syntax "#3f0001"
+	minus-emph-style = syntax "#901011"
+	minus-non-emph-style = syntax "#3f0001"
+	line-numbers-plus-style = "#6cb6ff"
+	line-numbers-minus-style = "#ff5555"
 [includeIf "gitdir:~/rxco/"]
-	path = /home/parker/.gitconfig-rxco
+	path = ~/.gitconfig-rxco
