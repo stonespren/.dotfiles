@@ -1,6 +1,7 @@
 [user]
 	email = parker@rx.co
 	name = parkerstone
+	signingkey = ~/.ssh/github-rxco.pub
 [init]
 	defaultBranch = main
 [core]
@@ -19,3 +20,6 @@
 	line-numbers = true
 	hyperlinks = true
 	dark = true
+
+[url "git@github-rxco:rx-co/"]
+	insteadOf = git@github.com:rx-co/

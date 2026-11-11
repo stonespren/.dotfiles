@@ -81,4 +81,11 @@ if [ -x "$HOME/.config/yadm/dark-mode.sh" ] && { [ -n "${DISPLAY:-}" ] || [ -n "
   fi
 fi
 
+# Proton Pass
+if [ -x "$HOME/.config/yadm/proton-pass.sh" ]; then
+  if ! "$HOME/.config/yadm/proton-pass.sh"; then
+    echo "Skipping Proton Pass setup for this session."
+  fi
+fi
+
 echo "Restart your computer"
