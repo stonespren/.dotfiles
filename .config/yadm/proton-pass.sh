@@ -101,14 +101,69 @@ key_failures=0
 ensure_public_key personal || key_failures=1
 ensure_public_key rxco || key_failures=1
 
-# SSH agent daemon
-if pass-cli ssh-agent daemon status 2>/dev/null | grep -Eq '^Status:[[:space:]]+running'; then
-  echo "✓ Proton Pass SSH agent already running"
+# SSH agent
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+
+# True when an agent started with `daemon start` (outside systemd) is running.
+# Capture first: piping into grep -q under pipefail can misreport a running agent
+standalone_agent_running() {
+  local status
+  status="$(pass-cli ssh-agent daemon status 2>/dev/null || true)"
+  grep -Eq '^Status:[[:space:]]+running' <<<"$status"
+}
+
+UNIT_NAME="proton-pass-ssh-agent.service"
+UNIT_FILE="$HOME/.config/systemd/user/$UNIT_NAME"
+UNIT_CONTENT="[Unit]
+Description=Proton Pass SSH agent
+
+[Service]
+# Clear a socket left behind by a crash or unclean shutdown
+ExecStartPre=-rm -f %h/.ssh/proton-pass-agent.sock
+ExecStart=%h/.local/bin/pass-cli ssh-agent start --socket-path %h/.ssh/proton-pass-agent.sock
+# Keep retrying, e.g. when the network is not up yet at login
+Restart=always
+RestartSec=10
+StandardOutput=append:$PASS_LOG_FILE
+StandardError=inherit
+
+[Install]
+WantedBy=default.target"
+
+if systemctl --user show-environment >/dev/null 2>&1; then
+  # Run the agent as a systemd user service so it starts at every login
+  unit_changed=0
+  if [ ! -f "$UNIT_FILE" ] || [ "$(cat "$UNIT_FILE")" != "$UNIT_CONTENT" ]; then
+    mkdir -p "$(dirname "$UNIT_FILE")"
+    printf '%s\n' "$UNIT_CONTENT" > "$UNIT_FILE"
+    systemctl --user daemon-reload
+    unit_changed=1
+  fi
+
+  # Hand the socket over from a standalone agent, if one is running
+  if ! systemctl --user is-active --quiet "$UNIT_NAME" && standalone_agent_running; then
+    pass-cli ssh-agent daemon stop
+  fi
+
+  if ! systemctl --user is-enabled --quiet "$UNIT_NAME"; then
+    systemctl --user enable "$UNIT_NAME"
+  fi
+
+  if ! systemctl --user is-active --quiet "$UNIT_NAME"; then
+    systemctl --user start "$UNIT_NAME"
+    echo "✓ Proton Pass SSH agent service started"
+  elif [ "$unit_changed" -eq 1 ]; then
+    systemctl --user restart "$UNIT_NAME"
+    echo "✓ Proton Pass SSH agent service restarted with updated config"
+  else
+    echo "✓ Proton Pass SSH agent service already running"
+  fi
+elif standalone_agent_running; then
+  echo "✓ Proton Pass SSH agent already running (no systemd user session)"
 else
-  mkdir -p "$HOME/.ssh"
-  chmod 700 "$HOME/.ssh"
   pass-cli ssh-agent daemon start --log-file "$PASS_LOG_FILE"
-  echo "✓ Proton Pass SSH agent started"
+  echo "✓ Proton Pass SSH agent started (no systemd user session; will not start at login)"
 fi
 
 exit "$key_failures"
