@@ -6,6 +6,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export SYSTEMD_EDITOR=nvim
+export PROTON_PASS_LINUX_KEYRING=dbus
 
 # PATH updates
 export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:/usr/local/go/bin:$HOME/go/bin:$PATH"

@@ -4,6 +4,16 @@ set -euo pipefail
 
 PASS_LOG_FILE="$HOME/.ssh/pp-agent.log"
 
+# Store the CLI session key in the desktop keyring (Secret Service over D-Bus).
+# The default kernel keyring is wiped on reboot, which logs the CLI out.
+# Must match the export in ~/.zshrc and the service's Environment= below.
+export PROTON_PASS_LINUX_KEYRING=dbus
+if ! busctl --user list 2>/dev/null | awk '{print $1}' | grep -Fxq org.freedesktop.secrets; then
+  echo "No Secret Service provider (e.g. gnome-keyring) is running on the session bus."
+  echo "Proton Pass needs one to keep you logged in across reboots."
+  exit 1
+fi
+
 # The installer drops the binary in ~/.local/bin, which may not be on PATH yet
 case ":$PATH:" in
   *":$HOME/.local/bin:"*) ;;
@@ -29,6 +39,8 @@ if ! pass-cli info >/dev/null 2>&1; then
     echo "Not logged in to Proton Pass and no interactive terminal; run 'pass-cli login' manually."
     exit 1
   fi
+  # Clear a leftover session whose key is gone (e.g. from the kernel keyring after a reboot)
+  pass-cli logout --force >/dev/null 2>&1 || true
   echo "Logging in to Proton Pass..."
   pass-cli login
   if ! pass-cli info >/dev/null 2>&1; then
@@ -119,12 +131,13 @@ UNIT_CONTENT="[Unit]
 Description=Proton Pass SSH agent
 
 [Service]
+Environment=PROTON_PASS_LINUX_KEYRING=dbus
 # Clear a socket left behind by a crash or unclean shutdown
 ExecStartPre=-rm -f %h/.ssh/proton-pass-agent.sock
 ExecStart=%h/.local/bin/pass-cli ssh-agent start --socket-path %h/.ssh/proton-pass-agent.sock
-# Keep retrying, e.g. when the network is not up yet at login
+# Keep retrying, e.g. when the network or keyring is not ready yet at login
 Restart=always
-RestartSec=10
+RestartSec=30
 StandardOutput=append:$PASS_LOG_FILE
 StandardError=inherit
 
